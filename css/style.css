@@ -124,14 +124,28 @@ header {
 
 .header-content {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    /* Centered Layout */
+    justify-content: center;
     align-items: center;
+    gap: var(--spacing-md);
 }
 
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: var(--primary-color);
+}
+
+.logo img {
+    height: 120px;
+    /* Increased size */
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
 }
 
 .logo span {
