@@ -115,20 +115,21 @@ h3 {
 header {
     background-color: var(--secondary-color);
     color: var(--text-light);
-    padding: var(--spacing-md) 0;
-    position: sticky;
-    top: 0;
+    padding: var(--spacing-xl) 0;
+    /* More vertical padding */
+    position: static;
+    /* Immersive feel */
     z-index: 100;
     box-shadow: var(--shadow-md);
+    border-bottom: 4px solid var(--primary-color);
 }
 
 .header-content {
     display: flex;
     flex-direction: column;
-    /* Centered Layout */
     justify-content: center;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: var(--spacing-lg);
 }
 
 .logo {
@@ -138,14 +139,15 @@ header {
 }
 
 .logo img {
-    height: 120px;
-    /* Increased size */
+    height: 200px;
+    /* Massive Logo */
     width: auto;
     transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
 }
 
 .logo img:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .logo span {
@@ -154,43 +156,65 @@ header {
 
 nav ul {
     display: flex;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-xl);
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 nav a {
     color: var(--text-light);
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 nav a:hover {
-    color: var(--primary-color);
+    color: var(--text-light);
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
 }
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('../hero-bg.jpg');
-    /* Placeholder for now */
+    background: linear-gradient(rgba(33, 33, 33, 0.9), rgba(33, 33, 33, 0.7)), url('../hero-bg.jpg');
     background-size: cover;
     background-position: center;
     color: var(--text-light);
-    padding: 100px 0;
+    padding: 150px 0;
+    /* Taller hero */
     text-align: center;
-    background-color: var(--secondary-color);
-    /* Fallback */
+    background-color: #1a1a1a;
+    position: relative;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(to top, var(--bg-light), transparent);
 }
 
 .hero h1 {
     color: var(--text-light);
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: var(--spacing-md);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero p {
-    font-size: 1.2rem;
-    margin-bottom: var(--spacing-lg);
-    max-width: 600px;
+    font-size: 1.4rem;
+    margin-bottom: var(--spacing-xl);
+    max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    opacity: 0.9;
 }
 
 /* Products Grid */
