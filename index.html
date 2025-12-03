@@ -5,24 +5,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valor Pro - Darba un Drošības Apģērbi</title>
-    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/style.css?v=4">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
     <header>
         <div class="container header-content">
-            <div class="logo">
-                <a href="#sakums">
-                    <img src="images/logo.png" alt="Valor Pro" style="height: 120px;">
-                </a>
+            <div class="header-top">
+                <div class="logo">
+                    <a href="#sakums">
+                        <img src="images/logo.png" alt="Valor Pro">
+                    </a>
+                </div>
+
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Meklēt...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+
+                    <div class="user-actions">
+                        <a href="#" class="icon-link" title="Profils"><i class="fas fa-user"></i></a>
+                        <a href="#" class="icon-link cart-icon" title="Grozs">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-info">
+                                <span class="cart-count">0</span>
+                                <span class="cart-total">0.00€</span>
+                            </span>
+                        </a>
+                        <div class="lang-selector">
+                            <span class="active">LV</span> | <a href="#">EN</a>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <nav>
                 <ul>
                     <li><a href="#sakums">Sākums</a></li>
-                    <li><a href="#produkti">Produkti</a></li>
+                    <li><a href="#produkti">Veikals</a></li>
                     <li><a href="#par-mums">Par mums</a></li>
                     <li><a href="#kontakti">Kontakti</a></li>
                 </ul>
@@ -38,69 +63,155 @@
         </div>
     </section>
 
-    <section id="produkti" class="products-section">
-        <div class="container">
-            <h2>Populārākie Produkti</h2>
-            <div class="products-grid">
-                <!-- Product 1 -->
-                <div class="product-card">
-                    <img src="Darbinės-pirštinės-PLUTO-WINTER-300x300.png" alt="Ziemas darba cimdi Pluto"
-                        class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">Ziemas Cimdi Pluto</h3>
-                        <p class="product-price">€20.00</p>
-                        <button class="btn btn-primary">Pirkt</button>
+    <section id="produkti" class="shop-section">
+        <div class="container shop-layout">
+            <!-- Sidebar -->
+            <aside class="shop-sidebar">
+                <div class="sidebar-widget">
+                    <h3>Kategorijas</h3>
+                    <ul>
+                        <li><a href="#">Darba Apģērbi</a></li>
+                        <li><a href="#">Darba Apavi</a></li>
+                        <li><a href="#">Cimdi</a></li>
+                        <li><a href="#">Aizsardzība</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3>Filtrēt</h3>
+                    <div class="filter-group">
+                        <h4>Cena</h4>
+                        <input type="range" min="0" max="100" class="price-range">
+                        <div class="price-inputs">
+                            <input type="number" placeholder="No"> - <input type="number" placeholder="Līdz">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <h4>Izmērs</h4>
+                        <label><input type="checkbox"> S</label>
+                        <label><input type="checkbox"> M</label>
+                        <label><input type="checkbox"> L</label>
+                        <label><input type="checkbox"> XL</label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Product Grid -->
+            <div class="main-shop-content">
+                <div class="shop-header">
+                    <h2>Visi Produkti</h2>
+                    <div class="sort-options">
+                        <select>
+                            <option>Noklusējuma</option>
+                            <option>Cena: Zema - Augsta</option>
+                            <option>Cena: Augsta - Zema</option>
+                        </select>
                     </div>
                 </div>
 
-                <!-- Product 2 -->
-                <div class="product-card">
-                    <img src="GRANBERG-547-300x300.png" alt="Granberg Cimdi" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">Granberg Aizsargcimdi</h3>
-                        <p class="product-price">€25.00</p>
-                        <button class="btn btn-primary">Pirkt</button>
+                <div class="products-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <div class="badge sale">-10%</div>
+                        <img src="Darbinės-pirštinės-PLUTO-WINTER-300x300.png" alt="Ziemas darba cimdi Pluto"
+                            class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-title">Ziemas Cimdi Pluto</h3>
+                            <div class="price-box">
+                                <span class="old-price">€22.00</span>
+                                <span class="product-price">€20.00</span>
+                            </div>
+                            <button class="btn btn-primary add-to-cart" data-price="20.00">Pievienot grozam</button>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Product 3 -->
-                <div class="product-card">
-                    <img src="Pirštinės-STEPO-161-sintetinės-odos-2-300x300.png" alt="Stepo Cimdi"
-                        class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">Stepo Sintētiskās Ādas Cimdi</h3>
-                        <p class="product-price">€30.00</p>
-                        <button class="btn btn-primary">Pirkt</button>
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <img src="GRANBERG-547-300x300.png" alt="Granberg Cimdi" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-title">Granberg Aizsargcimdi</h3>
+                            <div class="price-box">
+                                <span class="product-price">€25.00</span>
+                            </div>
+                            <button class="btn btn-primary add-to-cart" data-price="25.00">Pievienot grozam</button>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <img src="Pirštinės-STEPO-161-sintetinės-odos-2-300x300.png" alt="Stepo Cimdi"
+                            class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-title">Stepo Sintētiskās Ādas Cimdi</h3>
+                            <div class="price-box">
+                                <span class="product-price">€30.00</span>
+                            </div>
+                            <button class="btn btn-primary add-to-cart" data-price="30.00">Pievienot grozam</button>
+                        </div>
+                    </div>
+
+                    <!-- Placeholder Product 4 -->
+                    <div class="product-card">
+                        <img src="https://placehold.co/300x300/png" alt="Darba Jaka" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-title">Pro Darba Jaka</h3>
+                            <div class="price-box">
+                                <span class="product-price">€45.00</span>
+                            </div>
+                            <button class="btn btn-primary add-to-cart" data-price="45.00">Pievienot grozam</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="par-mums" class="container" style="padding: 60px 20px; text-align: center;">
-        <h2>Par Mums</h2>
-        <p style="max-width: 800px; margin: 0 auto; font-size: 1.1rem;">
-            Valor Pro ir uzticams darba drošības līdzekļu piegādātājs. Mēs saprotam, cik svarīga ir drošība un komforts
-            ikdienas darbā.
-            Mūsu sortimentā atradīsiet tikai pārbaudītus un sertificētus produktus no vadošajiem ražotājiem.
-        </p>
-    </section>
-
-    <section id="kontakti" class="contact-section">
+    <section class="brands-section">
         <div class="container">
-            <h2 style="text-align: center;">Sazinies ar Mums</h2>
-            <form class="contact-form">
-                <input type="text" placeholder="Jūsu Vārds" required>
-                <input type="email" placeholder="E-pasts" required>
-                <textarea placeholder="Jūsu ziņa..." rows="5" required></textarea>
-                <button type="submit" class="btn btn-primary">Nosūtīt Ziņu</button>
-            </form>
+            <h2>Mūsu Partneri</h2>
+            <div class="brands-grid">
+                <div class="brand-item">3M</div>
+                <div class="brand-item">Uvex</div>
+                <div class="brand-item">Helly Hansen</div>
+                <div class="brand-item">Snickers</div>
+                <div class="brand-item">Guide</div>
+            </div>
         </div>
     </section>
 
+    <section id="kontakti" class="contact-section">
+        <!-- Kept simple for now -->
+    </section>
+
     <footer>
-        <div class="container">
-            <p>&copy; 2023 Valor Pro. Visas tiesības aizsargātas.</p>
+        <div class="container footer-content">
+            <div class="footer-col">
+                <h3>Kontakti</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Rīga, Brīvības iela 123</p>
+                <p><i class="fas fa-phone"></i> +371 20000000</p>
+                <p><i class="fas fa-envelope"></i> info@valorpro.lv</p>
+            </div>
+            <div class="footer-col">
+                <h3>Informācija</h3>
+                <ul>
+                    <li><a href="#">Piegādes Noteikumi</a></li>
+                    <li><a href="#">Atgriešana</a></li>
+                    <li><a href="#">Privātuma Politika</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Sekojiet Mums</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2023 Valor Pro. Visas tiesības aizsargātas.</p>
+            </div>
         </div>
     </footer>
 
