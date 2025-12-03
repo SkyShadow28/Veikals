@@ -1,18 +1,32 @@
 :root {
-    /* Colors */
-    --primary-color: #D32F2F;
-    /* Valor Red */
-    --primary-hover: #B71C1C;
-    /* Darker Red */
-    --secondary-color: #212121;
-    /* Dark Black/Grey */
-    --accent-color: #FF5252;
-    /* Bright Red Accent */
-    --text-dark: #333333;
+    /* Colors - ValorPro Palette */
+    --primary-color: #D4111E;
+    /* Bright Red */
+    --primary-hover: #6A0D16;
+    /* Dark Red */
+    --secondary-color: #000000;
+    /* Black */
+    --accent-color: #8EA4A5;
+    /* Industrial Green-Grey */
+
+    --text-dark: #000000;
+    /* Black */
     --text-light: #FFFFFF;
-    --bg-light: #F9F9F9;
+    /* White */
+
+    --bg-light: #E9E5E4;
+    /* Neutral Light Grey */
     --bg-white: #FFFFFF;
-    --border-color: #E0E0E0;
+    /* Keep white for cards/contrast */
+    --bg-metallic: #D1CDCC;
+    /* Light Metallic Grey */
+
+    --border-color: #D1CDCC;
+    /* Light Metallic Grey */
+
+    /* Gradients */
+    --gradient-main: linear-gradient(135deg, #D4111E 0%, #6A0D16 100%);
+    --gradient-soft: linear-gradient(135deg, #EEDFE8 0%, #9A5C78 100%);
 
     /* Spacing */
     --spacing-xs: 4px;
@@ -26,7 +40,7 @@
 
     /* Shadows */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 /* Reset & Base Styles */
@@ -98,17 +112,21 @@ h3 {
     border-radius: 4px;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.1s ease;
+    transition: all 0.3s ease;
     border: none;
 }
 
 .btn-primary {
     background-color: var(--primary-color);
     color: var(--text-light);
+    border: 1px solid var(--primary-color);
 }
 
 .btn-primary:hover {
-    background-color: var(--primary-hover);
+    background: var(--gradient-main);
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 /* Header & Nav */
@@ -138,7 +156,6 @@ header {
 
 .logo img {
     height: 60px;
-    /* Adjusted size */
     width: auto;
     transition: transform 0.3s ease;
 }
@@ -235,6 +252,7 @@ nav a {
     letter-spacing: 1px;
     padding: var(--spacing-sm) var(--spacing-md);
     border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 nav a:hover {
@@ -245,13 +263,13 @@ nav a:hover {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(33, 33, 33, 0.9), rgba(33, 33, 33, 0.7)), url('../hero-bg.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(79, 88, 89, 0.8)), url('../hero-bg.jpg');
     background-size: cover;
     background-position: center;
     color: var(--text-light);
     padding: 100px 0;
     text-align: center;
-    background-color: #1a1a1a;
+    background-color: var(--secondary-color);
 }
 
 .hero h1 {
@@ -493,9 +511,6 @@ footer {
 .social-links {
     display: flex;
     gap: var(--spacing-md);
-}
-
-.social-links a {
     font-size: 1.5rem;
 }
 
