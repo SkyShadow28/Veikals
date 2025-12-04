@@ -34,6 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartTotalElement = document.querySelector('.cart-total');
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
 
+    // Modal Elements
+    const cartModalOverlay = document.getElementById('cartModalOverlay');
+    const cartItemsContainer = document.getElementById('cartItemsContainer');
+    const modalCartTotal = document.getElementById('modalCartTotal');
+    const cartIcon = document.querySelector('.cart-icon');
+    const closeModalBtn = document.querySelector('.close-modal');
+    const continueShoppingBtn = document.querySelector('.close-modal-btn');
+    const checkoutBtn = document.querySelector('.checkout-btn');
+
     // Load cart from localStorage
     let cart = JSON.parse(localStorage.getItem('valorProCart')) || [];
 
@@ -43,6 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         cartCountElement.textContent = totalCount;
         cartTotalElement.textContent = totalPrice.toFixed(2) + '€';
+
+        // Also update modal if open
+        if (cartModalOverlay.classList.contains('open')) {
+            renderCartModal();
+        }
     }
 
     function saveCart() {
@@ -66,10 +80,90 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             toast.classList.remove('show');
             setTimeout(() => {
-                container.removeChild(toast);
+                if (container.contains(toast)) {
+                    container.removeChild(toast);
+                }
             }, 300);
         }, 3000);
     }
+
+    // --- Modal Logic ---
+    function openModal(e) {
+        e.preventDefault();
+        renderCartModal();
+        cartModalOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function closeModal() {
+        cartModalOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function renderCartModal() {
+        cartItemsContainer.innerHTML = '';
+
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<p class="empty-cart-msg">Jūsu grozs ir tukšs.</p>';
+            modalCartTotal.textContent = '0.00€';
+            return;
+        }
+
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+
+            const itemElement = document.createElement('div');
+            itemElement.className = 'cart-item';
+            itemElement.innerHTML = `
+                <div class="cart-item-info">
+                    <span class="cart-item-title">${item.title}</span>
+                    <span class="cart-item-details">${item.quantity} x ${item.price.toFixed(2)}€</span>
+                </div>
+                <div class="cart-item-total">${itemTotal.toFixed(2)}€</div>
+                <button class="remove-item" data-index="${index}">&times;</button>
+            `;
+            cartItemsContainer.appendChild(itemElement);
+        });
+
+        modalCartTotal.textContent = total.toFixed(2) + '€';
+
+        // Add event listeners to remove buttons
+        const removeButtons = cartItemsContainer.querySelectorAll('.remove-item');
+        removeButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = parseInt(e.target.getAttribute('data-index'));
+                removeFromCart(index);
+            });
+        });
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        saveCart();
+        renderCartModal(); // Re-render immediately
+    }
+
+    // Event Listeners
+    cartIcon.addEventListener('click', openModal);
+    closeModalBtn.addEventListener('click', closeModal);
+    continueShoppingBtn.addEventListener('click', closeModal);
+
+    cartModalOverlay.addEventListener('click', (e) => {
+        if (e.target === cartModalOverlay) {
+            closeModal();
+        }
+    });
+
+    checkoutBtn.addEventListener('click', () => {
+        closeModal();
+        showNotification('Paldies! Pasūtījums noformēts (simulācija).');
+        // Optional: Clear cart
+        // cart = [];
+        // saveCart();
+    });
 
     addToCartButtons.forEach(button => {
         button.addEventListener('click', (e) => {
