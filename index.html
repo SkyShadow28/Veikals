@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valor Pro - Darba un Drošības Apģērbi</title>
-    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/style.css?v=5">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -116,12 +116,16 @@
                         <img src="Darbinės-pirštinės-PLUTO-WINTER-300x300.png" alt="Ziemas darba cimdi Pluto"
                             class="product-image">
                         <div class="product-info">
-                            <h3 class="product-title">Ziemas Cimdi Pluto</h3>
+                            <div class="product-header">
+                                <h3 class="product-title">Ziemas Cimdi Pluto</h3>
+                                <span class="status-dot" data-id="pluto"></span>
+                            </div>
                             <div class="price-box">
                                 <span class="old-price">€22.00</span>
                                 <span class="product-price">€20.00</span>
                             </div>
-                            <button class="btn btn-primary add-to-cart" data-price="20.00">Pievienot grozam</button>
+                            <button class="btn add-to-cart" data-id="pluto" data-title="Ziemas Cimdi Pluto"
+                                data-price="20.00">Pievienot grozam</button>
                         </div>
                     </div>
 
@@ -129,11 +133,15 @@
                     <div class="product-card">
                         <img src="GRANBERG-547-300x300.png" alt="Granberg Cimdi" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-title">Granberg Aizsargcimdi</h3>
+                            <div class="product-header">
+                                <h3 class="product-title">Granberg Aizsargcimdi</h3>
+                                <span class="status-dot" data-id="granberg"></span>
+                            </div>
                             <div class="price-box">
                                 <span class="product-price">€25.00</span>
                             </div>
-                            <button class="btn btn-primary add-to-cart" data-price="25.00">Pievienot grozam</button>
+                            <button class="btn add-to-cart" data-id="granberg" data-title="Granberg Aizsargcimdi"
+                                data-price="25.00">Pievienot grozam</button>
                         </div>
                     </div>
 
@@ -142,11 +150,15 @@
                         <img src="Pirštinės-STEPO-161-sintetinės-odos-2-300x300.png" alt="Stepo Cimdi"
                             class="product-image">
                         <div class="product-info">
-                            <h3 class="product-title">Stepo Sintētiskās Ādas Cimdi</h3>
+                            <div class="product-header">
+                                <h3 class="product-title">Stepo Sintētiskās Ādas Cimdi</h3>
+                                <span class="status-dot" data-id="stepo"></span>
+                            </div>
                             <div class="price-box">
                                 <span class="product-price">€30.00</span>
                             </div>
-                            <button class="btn btn-primary add-to-cart" data-price="30.00">Pievienot grozam</button>
+                            <button class="btn add-to-cart" data-id="stepo" data-title="Stepo Sintētiskās Ādas Cimdi"
+                                data-price="30.00">Pievienot grozam</button>
                         </div>
                     </div>
 
@@ -154,11 +166,15 @@
                     <div class="product-card">
                         <img src="https://placehold.co/300x300/png" alt="Darba Jaka" class="product-image">
                         <div class="product-info">
-                            <h3 class="product-title">Pro Darba Jaka</h3>
+                            <div class="product-header">
+                                <h3 class="product-title">Pro Darba Jaka</h3>
+                                <span class="status-dot" data-id="jaka"></span>
+                            </div>
                             <div class="price-box">
                                 <span class="product-price">€45.00</span>
                             </div>
-                            <button class="btn btn-primary add-to-cart" data-price="45.00">Pievienot grozam</button>
+                            <button class="btn add-to-cart" data-id="jaka" data-title="Pro Darba Jaka"
+                                data-price="45.00">Pievienot grozam</button>
                         </div>
                     </div>
                 </div>
@@ -215,6 +231,7 @@
         </div>
     </footer>
 
+    <div id="toast-container"></div>
     <script src="js/script.js"></script>
 </body>
 
