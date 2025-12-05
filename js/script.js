@@ -34,14 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartTotalElement = document.querySelector('.cart-total');
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
 
-    // Modal Elements
-    const cartModalOverlay = document.getElementById('cartModalOverlay');
-    const cartItemsContainer = document.getElementById('cartItemsContainer');
-    const modalCartTotal = document.getElementById('modalCartTotal');
-    const cartIcon = document.querySelector('.cart-icon');
-    const closeModalBtn = document.querySelector('.close-modal');
-    const continueShoppingBtn = document.querySelector('.close-modal-btn');
-    const checkoutBtn = document.querySelector('.checkout-btn');
+    // New Modal Elements
+    const cartIcon = document.getElementById("cart-icon");
+    const cartModal = document.getElementById("cart-modal");
+    const closeCart = document.getElementById("close-cart");
+    const cartItemsContainer = document.getElementById("cart-items");
+    const checkoutBtn = document.getElementById("checkout-btn");
 
     // Load cart from localStorage
     let cart = JSON.parse(localStorage.getItem('valorProCart')) || [];
@@ -50,11 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
         const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-        cartCountElement.textContent = totalCount;
-        cartTotalElement.textContent = totalPrice.toFixed(2) + '€';
+        if (cartCountElement) cartCountElement.textContent = totalCount;
+        if (cartTotalElement) cartTotalElement.textContent = totalPrice.toFixed(2) + '€';
 
         // Also update modal if open
-        if (cartModalOverlay.classList.contains('open')) {
+        if (cartModal.style.display === 'flex') {
             renderCartModal();
         }
     }
@@ -66,6 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showNotification(message) {
         const container = document.getElementById('toast-container');
+        if (!container) return;
+
         const toast = document.createElement('div');
         toast.className = 'toast-notification';
         toast.innerHTML = `<i class="fas fa-check-circle" style="color: #2ECC71;"></i> ${message}`;
@@ -87,25 +87,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    // --- Modal Logic ---
-    function openModal(e) {
-        e.preventDefault();
-        renderCartModal();
-        cartModalOverlay.classList.add('open');
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    // --- Modal Logic (Requested Implementation) ---
+
+    // Open modal
+    if (cartIcon) {
+        cartIcon.addEventListener("click", (e) => {
+            if (e) e.preventDefault();
+            renderCartModal();
+            cartModal.style.display = "flex";
+            document.body.classList.add("no-scroll");
+        });
     }
 
-    function closeModal() {
-        cartModalOverlay.classList.remove('open');
-        document.body.style.overflow = '';
+    // Close modal
+    if (closeCart) {
+        closeCart.addEventListener("click", () => {
+            cartModal.style.display = "none";
+            document.body.classList.remove("no-scroll");
+        });
+    }
+
+    // Click outside modal to close
+    if (cartModal) {
+        cartModal.addEventListener("click", (e) => {
+            if (e.target === cartModal) {
+                cartModal.style.display = "none";
+                document.body.classList.remove("no-scroll");
+            }
+        });
     }
 
     function renderCartModal() {
+        if (!cartItemsContainer) return;
+
         cartItemsContainer.innerHTML = '';
 
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = '<p class="empty-cart-msg">Jūsu grozs ir tukšs.</p>';
-            modalCartTotal.textContent = '0.00€';
             return;
         }
 
@@ -117,18 +135,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const itemElement = document.createElement('div');
             itemElement.className = 'cart-item';
+            // Simple styling for items inside the new structure
+            itemElement.style.display = 'flex';
+            itemElement.style.justifyContent = 'space-between';
+            itemElement.style.alignItems = 'center';
+            itemElement.style.padding = '10px 0';
+            itemElement.style.borderBottom = '1px solid #eee';
+
             itemElement.innerHTML = `
                 <div class="cart-item-info">
-                    <span class="cart-item-title">${item.title}</span>
-                    <span class="cart-item-details">${item.quantity} x ${item.price.toFixed(2)}€</span>
+                    <div style="font-weight:bold;">${item.title}</div>
+                    <div style="font-size:0.9em; color:#666;">${item.quantity} x ${item.price.toFixed(2)}€</div>
                 </div>
-                <div class="cart-item-total">${itemTotal.toFixed(2)}€</div>
-                <button class="remove-item" data-index="${index}">&times;</button>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div class="cart-item-total" style="font-weight:bold;">${itemTotal.toFixed(2)}€</div>
+                    <button class="remove-item" data-index="${index}" style="background:none; border:none; color:red; cursor:pointer; font-size:1.2em;">&times;</button>
+                </div>
             `;
             cartItemsContainer.appendChild(itemElement);
         });
 
-        modalCartTotal.textContent = total.toFixed(2) + '€';
+        // Append Total
+        const totalElement = document.createElement('div');
+        totalElement.style.marginTop = '15px';
+        totalElement.style.textAlign = 'right';
+        totalElement.style.fontSize = '1.2em';
+        totalElement.style.fontWeight = 'bold';
+        totalElement.innerHTML = `Kopā: ${total.toFixed(2)}€`;
+        cartItemsContainer.appendChild(totalElement);
 
         // Add event listeners to remove buttons
         const removeButtons = cartItemsContainer.querySelectorAll('.remove-item');
@@ -146,30 +180,20 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCartModal(); // Re-render immediately
     }
 
-    // Event Listeners
-    cartIcon.addEventListener('click', openModal);
-    closeModalBtn.addEventListener('click', closeModal);
-    continueShoppingBtn.addEventListener('click', closeModal);
-
-    cartModalOverlay.addEventListener('click', (e) => {
-        if (e.target === cartModalOverlay) {
-            closeModal();
-        }
-    });
-
-    checkoutBtn.addEventListener('click', () => {
-        closeModal();
-        showNotification('Paldies! Pasūtījums noformēts (simulācija).');
-        // Optional: Clear cart
-        // cart = [];
-        // saveCart();
-    });
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', () => {
+            cartModal.style.display = "none";
+            document.body.classList.remove("no-scroll");
+            showNotification('Paldies! Pasūtījums noformēts (simulācija).');
+        });
+    }
 
     addToCartButtons.forEach(button => {
         button.addEventListener('click', (e) => {
-            const id = button.getAttribute('data-id');
-            const title = button.getAttribute('data-title');
-            const price = parseFloat(button.getAttribute('data-price'));
+            // Use dataset or getAttribute
+            const id = button.getAttribute('data-id') || button.dataset.id;
+            const title = button.getAttribute('data-title') || button.dataset.title;
+            const price = parseFloat(button.getAttribute('data-price') || button.dataset.price);
 
             // Check availability
             const itemInInventory = inventory.find(i => i.id === id);

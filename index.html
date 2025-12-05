@@ -30,7 +30,7 @@
 
                     <div class="user-actions">
                         <a href="#" class="icon-link" title="Profils"><i class="fas fa-user"></i></a>
-                        <a href="#" class="icon-link cart-icon" title="Grozs">
+                        <a href="#" class="icon-link cart-icon" id="cart-icon" title="Grozs">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="cart-info">
                                 <span class="cart-count">0</span>
@@ -231,32 +231,18 @@
         </div>
     </footer>
 
-    <!-- Cart Modal -->
-    <div class="cart-modal-overlay" id="cartModalOverlay">
-        <div class="cart-modal">
-            <div class="cart-modal-header">
-                <h2>Jūsu Grozs</h2>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="cart-modal-body" id="cartItemsContainer">
-                <!-- Items will be injected here -->
-                <p class="empty-cart-msg">Jūsu grozs ir tukšs.</p>
-            </div>
-            <div class="cart-modal-footer">
-                <div class="cart-total-row">
-                    <span>Kopā:</span>
-                    <span id="modalCartTotal">0.00€</span>
-                </div>
-                <div class="cart-actions">
-                    <button class="btn btn-secondary close-modal-btn">Turpināt iepirkšanos</button>
-                    <button class="btn btn-primary checkout-btn">Pāriet uz apmaksu</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div id="toast-container"></div>
     <script src="js/script.js"></script>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="cart-modal-overlay">
+        <div class="cart-modal">
+            <span id="close-cart" class="close-cart">&times;</span>
+            <h2>Jūsu grozs</h2>
+            <div id="cart-items"></div>
+            <button id="checkout-btn" class="checkout-btn">Pirkumu apmaksa</button>
+        </div>
+    </div>
 </body>
 
 </html>
