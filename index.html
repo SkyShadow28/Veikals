@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valor Pro - Darba un Drošības Apģērbi</title>
-    <link rel="stylesheet" href="css/style.css?v=5">
+    <link rel="stylesheet" href="css/style.css?v=6">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -124,12 +124,7 @@
                                 <span class="old-price">€22.00</span>
                                 <span class="product-price">€20.00</span>
                             </div>
-                            <button class="product-details-btn" data-id="pluto" data-title="Ziemas Cimdi Pluto"
-                                data-price="20.00" data-image="Darbinės-pirštinės-PLUTO-WINTER-300x300.png"
-                                data-description="Augstas kvalitātes ziemas darba cimdi ar siltu iekšējo apšuvumu."
-                                data-availability="Pieejams">Apraksts</button>
-                            <button class="add-to-cart-btn" data-id="pluto" data-title="Ziemas Cimdi Pluto"
-                                data-price="20.00">Pievienot grozam</button>
+                            <button class="add-to-cart-btn" data-id="pluto">Pievienot grozam</button>
                         </div>
                     </div>
 
@@ -144,12 +139,7 @@
                             <div class="price-box">
                                 <span class="product-price">€25.00</span>
                             </div>
-                            <button class="product-details-btn" data-id="granberg" data-title="Granberg Aizsargcimdi"
-                                data-price="25.00" data-image="GRANBERG-547-300x300.png"
-                                data-description="Stiprās Aizsargcimdi ar izturīgu materiālu."
-                                data-availability="Nav pieejams">Apraksts</button>
-                            <button class="add-to-cart-btn" data-id="granberg" data-title="Granberg Aizsargcimdi"
-                                data-price="25.00">Pievienot grozam</button>
+                            <button class="add-to-cart-btn" data-id="granberg">Pievienot grozam</button>
                         </div>
                     </div>
 
@@ -165,13 +155,7 @@
                             <div class="price-box">
                                 <span class="product-price">€30.00</span>
                             </div>
-                            <button class="product-details-btn" data-id="stepo"
-                                data-title="Stepo Sintētiskās Ādas Cimdi" data-price="30.00"
-                                data-image="Pirštinės-STEPO-161-sintetinės-odos-2-300x300.png"
-                                data-description="Elastīgi sintētiskās ādas cimdi ar modernu dizainu."
-                                data-availability="Pieejams">Apraksts</button>
-                            <button class="add-to-cart-btn" data-id="stepo" data-title="Stepo Sintētiskās Ādas Cimdi"
-                                data-price="30.00">Pievienot grozam</button>
+                            <button class="add-to-cart-btn" data-id="stepo">Pievienot grozam</button>
                         </div>
                     </div>
 
@@ -186,12 +170,7 @@
                             <div class="price-box">
                                 <span class="product-price">€45.00</span>
                             </div>
-                            <button class="product-details-btn" data-id="jaka" data-title="Pro Darba Jaka"
-                                data-price="45.00" data-image="https://placehold.co/300x300/png"
-                                data-description="Kvalitatīvs darba jakas modelis ar daudzām kabatām."
-                                data-availability="Pieejams">Apraksts</button>
-                            <button class="add-to-cart-btn" data-id="jaka" data-title="Pro Darba Jaka"
-                                data-price="45.00">Pievienot grozam</button>
+                            <button class="add-to-cart-btn" data-id="jaka">Pievienot grozam</button>
                         </div>
                     </div>
                 </div>
@@ -261,23 +240,38 @@
         </div>
     </div>
 
-    <!-- Product Details Modal -->
+    <!-- Product Details Modal (Large) -->
     <div id="productDetailsOverlay">
         <div class="product-details-modal">
             <span class="close-details-modal">&times;</span>
-            <img src="" alt="Product Image" class="modal-product-image">
-            <h2 class="modal-product-title"></h2>
-            <p class="modal-product-price"></p>
-            <p class="modal-product-availability"></p>
-            <p class="modal-product-description"></p>
-            <select id="productSizeSelector">
+            <div class="modal-content-wrapper">
+                <img src="" alt="Product Image" class="modal-product-image">
+                <div class="modal-product-info">
+                    <h2 class="modal-product-title"></h2>
+                    <p class="modal-product-price"></p>
+                    <p class="modal-product-availability"></p>
+                    <p class="modal-product-description"></p>
+                    <select id="productSizeSelector">
+                        <option value="">Izvēlies izmēru</option>
+                    </select>
+                    <button class="modal-add-to-cart-btn" disabled>Pievienot grozam</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Add Modal (Small) -->
+    <div id="quickAddOverlay" class="cart-modal-overlay">
+        <div class="quick-add-modal">
+            <span class="close-quick-modal">&times;</span>
+            <img src="" alt="Product Image" class="quick-product-image">
+            <h3 class="quick-product-title"></h3>
+            <p class="quick-product-price"></p>
+            <p class="quick-product-stock"></p>
+            <select id="quickSizeSelector">
                 <option value="">Izvēlies izmēru</option>
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
             </select>
-            <button class="modal-add-to-cart-btn" disabled>Pievienot grozam</button>
+            <button class="quick-add-btn" disabled>Pievienot grozam</button>
         </div>
     </div>
 </body>
