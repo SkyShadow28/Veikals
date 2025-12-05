@@ -1,9 +1,4 @@
-// Main script for Valor Pro website
-
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Valor Pro website loaded');
-
-    // --- Inventory Data (Simulated) ---
     const inventory = [
         { id: 'pluto', available: true },
         { id: 'granberg', available: false },
@@ -11,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'jaka', available: true }
     ];
 
-    // --- Initialize Availability Indicators ---
     function initAvailability() {
         inventory.forEach(item => {
             const dot = document.querySelector(`.status-dot[data-id="${item.id}"]`);
@@ -29,19 +23,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initAvailability();
 
-    // --- Cart Functionality ---
     const cartCountElement = document.querySelector('.cart-count');
     const cartTotalElement = document.querySelector('.cart-total');
-    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    // Updated selector
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
 
-    // New Modal Elements
-    const cartIcon = document.getElementById("cart-icon");
-    const cartModal = document.getElementById("cart-modal");
-    const closeCart = document.getElementById("close-cart");
-    const cartItemsContainer = document.getElementById("cart-items");
-    const checkoutBtn = document.getElementById("checkout-btn");
+    const cartIcon = document.querySelector('.cart-icon');
+    const cartModalOverlay = document.getElementById('cartModalOverlay');
+    const cartModal = document.querySelector('.cart-modal');
+    const closeCart = document.querySelector('.close-modal');
+    const cartItemsContainer = document.getElementById('cartItemsContainer');
+    const checkoutBtn = document.querySelector('.checkout-btn');
 
-    // Load cart from localStorage
     let cart = JSON.parse(localStorage.getItem('valorProCart')) || [];
 
     function updateCartUI() {
@@ -51,8 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cartCountElement) cartCountElement.textContent = totalCount;
         if (cartTotalElement) cartTotalElement.textContent = totalPrice.toFixed(2) + '€';
 
-        // Also update modal if open
-        if (cartModal.style.display === 'flex') {
+        if (cartModalOverlay && cartModalOverlay.style.display === 'flex') {
             renderCartModal();
         }
     }
@@ -71,10 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toast.innerHTML = `<i class="fas fa-check-circle" style="color: #2ECC71;"></i> ${message}`;
 
         container.appendChild(toast);
-
-        // Trigger reflow
         toast.offsetHeight;
-
         toast.classList.add('show');
 
         setTimeout(() => {
@@ -87,32 +76,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    // --- Modal Logic (Requested Implementation) ---
-
-    // Open modal
     if (cartIcon) {
-        cartIcon.addEventListener("click", (e) => {
+        cartIcon.addEventListener('click', (e) => {
             if (e) e.preventDefault();
             renderCartModal();
-            cartModal.style.display = "flex";
-            document.body.classList.add("no-scroll");
+            if (cartModalOverlay) {
+                cartModalOverlay.style.display = 'flex';
+                document.body.classList.add('no-scroll');
+            }
         });
     }
 
-    // Close modal
     if (closeCart) {
-        closeCart.addEventListener("click", () => {
-            cartModal.style.display = "none";
-            document.body.classList.remove("no-scroll");
+        closeCart.addEventListener('click', () => {
+            if (cartModalOverlay) {
+                cartModalOverlay.style.display = 'none';
+                document.body.classList.remove('no-scroll');
+            }
         });
     }
 
-    // Click outside modal to close
-    if (cartModal) {
-        cartModal.addEventListener("click", (e) => {
-            if (e.target === cartModal) {
-                cartModal.style.display = "none";
-                document.body.classList.remove("no-scroll");
+    if (cartModalOverlay) {
+        cartModalOverlay.addEventListener('click', (e) => {
+            if (e.target === cartModalOverlay) {
+                cartModalOverlay.style.display = 'none';
+                document.body.classList.remove('no-scroll');
             }
         });
     }
@@ -135,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const itemElement = document.createElement('div');
             itemElement.className = 'cart-item';
-            // Simple styling for items inside the new structure
             itemElement.style.display = 'flex';
             itemElement.style.justifyContent = 'space-between';
             itemElement.style.alignItems = 'center';
@@ -155,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
             cartItemsContainer.appendChild(itemElement);
         });
 
-        // Append Total
         const totalElement = document.createElement('div');
         totalElement.style.marginTop = '15px';
         totalElement.style.textAlign = 'right';
@@ -164,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
         totalElement.innerHTML = `Kopā: ${total.toFixed(2)}€`;
         cartItemsContainer.appendChild(totalElement);
 
-        // Add event listeners to remove buttons
         const removeButtons = cartItemsContainer.querySelectorAll('.remove-item');
         removeButtons.forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -177,33 +162,33 @@ document.addEventListener('DOMContentLoaded', () => {
     function removeFromCart(index) {
         cart.splice(index, 1);
         saveCart();
-        renderCartModal(); // Re-render immediately
+        renderCartModal();
     }
 
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', () => {
-            cartModal.style.display = "none";
-            document.body.classList.remove("no-scroll");
+            if (cartModalOverlay) {
+                cartModalOverlay.style.display = 'none';
+                document.body.classList.remove('no-scroll');
+            }
             showNotification('Paldies! Pasūtījums noformēts (simulācija).');
         });
     }
 
+    // Direct Add to Cart Buttons (on cards)
     addToCartButtons.forEach(button => {
         button.addEventListener('click', (e) => {
-            // Use dataset or getAttribute
             const id = button.getAttribute('data-id') || button.dataset.id;
             const title = button.getAttribute('data-title') || button.dataset.title;
             const price = parseFloat(button.getAttribute('data-price') || button.dataset.price);
 
-            // Check availability
             const itemInInventory = inventory.find(i => i.id === id);
             if (itemInInventory && !itemInInventory.available) {
                 showNotification('Atvainojiet, šī prece nav pieejama.');
                 return;
             }
 
-            // Add to cart logic
-            const existingItem = cart.find(item => item.id === id);
+            const existingItem = cart.find(item => item.id === id && item.title === title);
 
             if (existingItem) {
                 existingItem.quantity++;
@@ -219,18 +204,128 @@ document.addEventListener('DOMContentLoaded', () => {
             saveCart();
             showNotification('Pievienots grozam!');
 
-            // Button feedback
             const originalText = button.textContent;
             button.textContent = 'Pievienots!';
-            button.style.backgroundColor = '#2ECC71'; // Green feedback
+            button.style.backgroundColor = '#2ECC71';
 
             setTimeout(() => {
                 button.textContent = originalText;
-                button.style.backgroundColor = ''; // Revert to CSS style
+                button.style.backgroundColor = '';
             }, 1000);
         });
     });
 
-    // Initial UI update
+    // Product Details Modal Logic
+    const productDetailsOverlay = document.getElementById('productDetailsOverlay');
+    const closeDetailsModal = document.querySelector('.close-details-modal');
+    const modalImage = document.querySelector('.modal-product-image');
+    const modalTitle = document.querySelector('.modal-product-title');
+    const modalPrice = document.querySelector('.modal-product-price');
+    const modalAvailability = document.querySelector('.modal-product-availability');
+    const modalDescription = document.querySelector('.modal-product-description');
+    const productSizeSelector = document.getElementById('productSizeSelector');
+    const modalAddToCartBtn = document.querySelector('.modal-add-to-cart-btn');
+
+    const productDetailsButtons = document.querySelectorAll('.product-details-btn');
+
+    let currentProductDetails = {};
+
+    productDetailsButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            const title = btn.getAttribute('data-title');
+            const price = btn.getAttribute('data-price');
+            const image = btn.getAttribute('data-image');
+            const description = btn.getAttribute('data-description');
+            const availability = btn.getAttribute('data-availability');
+
+            currentProductDetails = { id, title, price: parseFloat(price) };
+
+            if (modalImage) modalImage.src = image;
+            if (modalTitle) modalTitle.textContent = title;
+            if (modalPrice) modalPrice.textContent = price + '€';
+            if (modalAvailability) modalAvailability.textContent = 'Pieejamība: ' + availability;
+            if (modalDescription) modalDescription.textContent = description;
+
+            // Reset size selector and button
+            if (productSizeSelector) productSizeSelector.value = "";
+            if (modalAddToCartBtn) modalAddToCartBtn.disabled = true;
+
+            if (productDetailsOverlay) {
+                productDetailsOverlay.style.display = 'flex';
+                document.body.classList.add('no-scroll');
+            }
+        });
+    });
+
+    if (closeDetailsModal) {
+        closeDetailsModal.addEventListener('click', () => {
+            if (productDetailsOverlay) {
+                productDetailsOverlay.style.display = 'none';
+                document.body.classList.remove('no-scroll');
+            }
+        });
+    }
+
+    if (productDetailsOverlay) {
+        productDetailsOverlay.addEventListener('click', (e) => {
+            if (e.target === productDetailsOverlay) {
+                productDetailsOverlay.style.display = 'none';
+                document.body.classList.remove('no-scroll');
+            }
+        });
+    }
+
+    if (productSizeSelector) {
+        productSizeSelector.addEventListener('change', () => {
+            if (modalAddToCartBtn) {
+                if (productSizeSelector.value) {
+                    modalAddToCartBtn.disabled = false;
+                } else {
+                    modalAddToCartBtn.disabled = true;
+                }
+            }
+        });
+    }
+
+    if (modalAddToCartBtn) {
+        modalAddToCartBtn.addEventListener('click', () => {
+            const size = productSizeSelector.value;
+            if (!size) return;
+
+            const id = currentProductDetails.id;
+            const title = `${currentProductDetails.title} (Izmērs: ${size})`;
+            const price = currentProductDetails.price;
+
+            // Check availability
+            const itemInInventory = inventory.find(i => i.id === id);
+            if (itemInInventory && !itemInInventory.available) {
+                showNotification('Atvainojiet, šī prece nav pieejama.');
+                return;
+            }
+
+            const existingItem = cart.find(item => item.id === id && item.title === title);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({
+                    id: id,
+                    title: title,
+                    price: price,
+                    quantity: 1
+                });
+            }
+
+            saveCart();
+            showNotification('Pievienots grozam!');
+
+            if (productDetailsOverlay) {
+                productDetailsOverlay.style.display = 'none';
+                document.body.classList.remove('no-scroll');
+            }
+        });
+    }
+
     updateCartUI();
 });

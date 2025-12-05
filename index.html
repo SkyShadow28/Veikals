@@ -124,7 +124,11 @@
                                 <span class="old-price">€22.00</span>
                                 <span class="product-price">€20.00</span>
                             </div>
-                            <button class="btn add-to-cart" data-id="pluto" data-title="Ziemas Cimdi Pluto"
+                            <button class="product-details-btn" data-id="pluto" data-title="Ziemas Cimdi Pluto"
+                                data-price="20.00" data-image="Darbinės-pirštinės-PLUTO-WINTER-300x300.png"
+                                data-description="Augstas kvalitātes ziemas darba cimdi ar siltu iekšējo apšuvumu."
+                                data-availability="Pieejams">Apraksts</button>
+                            <button class="add-to-cart-btn" data-id="pluto" data-title="Ziemas Cimdi Pluto"
                                 data-price="20.00">Pievienot grozam</button>
                         </div>
                     </div>
@@ -140,7 +144,11 @@
                             <div class="price-box">
                                 <span class="product-price">€25.00</span>
                             </div>
-                            <button class="btn add-to-cart" data-id="granberg" data-title="Granberg Aizsargcimdi"
+                            <button class="product-details-btn" data-id="granberg" data-title="Granberg Aizsargcimdi"
+                                data-price="25.00" data-image="GRANBERG-547-300x300.png"
+                                data-description="Stiprās Aizsargcimdi ar izturīgu materiālu."
+                                data-availability="Nav pieejams">Apraksts</button>
+                            <button class="add-to-cart-btn" data-id="granberg" data-title="Granberg Aizsargcimdi"
                                 data-price="25.00">Pievienot grozam</button>
                         </div>
                     </div>
@@ -157,7 +165,12 @@
                             <div class="price-box">
                                 <span class="product-price">€30.00</span>
                             </div>
-                            <button class="btn add-to-cart" data-id="stepo" data-title="Stepo Sintētiskās Ādas Cimdi"
+                            <button class="product-details-btn" data-id="stepo"
+                                data-title="Stepo Sintētiskās Ādas Cimdi" data-price="30.00"
+                                data-image="Pirštinės-STEPO-161-sintetinės-odos-2-300x300.png"
+                                data-description="Elastīgi sintētiskās ādas cimdi ar modernu dizainu."
+                                data-availability="Pieejams">Apraksts</button>
+                            <button class="add-to-cart-btn" data-id="stepo" data-title="Stepo Sintētiskās Ādas Cimdi"
                                 data-price="30.00">Pievienot grozam</button>
                         </div>
                     </div>
@@ -173,7 +186,11 @@
                             <div class="price-box">
                                 <span class="product-price">€45.00</span>
                             </div>
-                            <button class="btn add-to-cart" data-id="jaka" data-title="Pro Darba Jaka"
+                            <button class="product-details-btn" data-id="jaka" data-title="Pro Darba Jaka"
+                                data-price="45.00" data-image="https://placehold.co/300x300/png"
+                                data-description="Kvalitatīvs darba jakas modelis ar daudzām kabatām."
+                                data-availability="Pieejams">Apraksts</button>
+                            <button class="add-to-cart-btn" data-id="jaka" data-title="Pro Darba Jaka"
                                 data-price="45.00">Pievienot grozam</button>
                         </div>
                     </div>
@@ -235,12 +252,32 @@
     <script src="js/script.js"></script>
 
     <!-- Cart Modal -->
-    <div id="cart-modal" class="cart-modal-overlay">
+    <div id="cartModalOverlay" class="cart-modal-overlay">
         <div class="cart-modal">
-            <span id="close-cart" class="close-cart">&times;</span>
+            <span class="close-modal">&times;</span>
             <h2>Jūsu grozs</h2>
-            <div id="cart-items"></div>
-            <button id="checkout-btn" class="checkout-btn">Pirkumu apmaksa</button>
+            <div id="cartItemsContainer"></div>
+            <button class="checkout-btn">Pirkumu apmaksa</button>
+        </div>
+    </div>
+
+    <!-- Product Details Modal -->
+    <div id="productDetailsOverlay">
+        <div class="product-details-modal">
+            <span class="close-details-modal">&times;</span>
+            <img src="" alt="Product Image" class="modal-product-image">
+            <h2 class="modal-product-title"></h2>
+            <p class="modal-product-price"></p>
+            <p class="modal-product-availability"></p>
+            <p class="modal-product-description"></p>
+            <select id="productSizeSelector">
+                <option value="">Izvēlies izmēru</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+            </select>
+            <button class="modal-add-to-cart-btn" disabled>Pievienot grozam</button>
         </div>
     </div>
 </body>
