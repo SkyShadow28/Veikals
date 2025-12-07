@@ -405,8 +405,8 @@ nav a:hover {
 }
 
 .product-image {
-    width: 100%;
-    height: 220px;
+    width: 115%;
+    height: 250px;
     object-fit: contain;
     background-color: #fff;
     padding: var(--spacing-md);
