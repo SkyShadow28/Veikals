@@ -960,28 +960,6 @@ body.no-scroll {
     z-index: 10000;
 }
 
-.quick-add-modal {
-    background: #fff;
-    padding: 30px;
-    width: 90%;
-    max-width: 400px;
-    border-radius: 8px;
-    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 0.25s ease;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    position: relative;
-    text-align: center;
-    align-items: center;
-}
-
-.quick-product-image {
-    max-width: 150px;
-    height: auto;
-    margin-bottom: 10px;
-}
-
 .quick-product-title {
     font-size: 1.2rem;
     font-weight: bold;
