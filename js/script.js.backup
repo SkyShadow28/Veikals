@@ -102,7 +102,9 @@ function renderProducts(productsToRender) {
                 <img src="${product.image}" alt="${product.title}" class="product-image" loading="lazy">
                 <div class="product-info">
                     <h3>${product.title}</h3>
-
+                    <p class="product-description-short">
+                        ${product.description ? product.description.substring(0, 70) + '...' : ''}
+                    </p>
                     <p class="price">${formattedPrice}</p>
                     <span class="status-dot ${product.available ? 'status-green' : 'status-red'}" data-tooltip="${product.available ? 'Pieejams' : 'Nav pieejams'}"></span> 
                 </div>
@@ -413,14 +415,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // 2.2. Noklikšķināts uz kartītes (Atver Lielo Detaļu Modālo)
-            const productWrapper = e.target.closest('.product-content-wrapper');
-            if (productWrapper) {
-                const productCard = productWrapper.closest('.product-card');
-                if (productCard) {
-                    const id = productCard.getAttribute('data-id');
-                    if (id) {
-                        openProductDetailsModal(id);
-                    }
+            const productCard = e.target.closest('.product-card');
+            if (productCard) {
+                e.stopPropagation();
+                const id = productCard.getAttribute('data-id');
+                if (id) {
+                    openProductDetailsModal(id);
                 }
                 return;
             }

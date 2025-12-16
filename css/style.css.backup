@@ -474,15 +474,6 @@ nav a:hover {
     background-color: #1A1A1A;
     /* Black */
 }
-.status-green {
-    background-color: #2ECC71;
-    /* Bright Green - Available */
-}
-
-.status-red {
-    background-color: #1A1A1A;
-    /* Black - Unavailable */
-}
 
 /* Tooltip */
 .status-dot::after {
@@ -677,15 +668,6 @@ footer {
 .status-unavailable {
     background-color: #1A1A1A;
     /* Black */
-}
-.status-green {
-    background-color: #2ECC71;
-    /* Bright Green - Available */
-}
-
-.status-red {
-    background-color: #1A1A1A;
-    /* Black - Unavailable */
 }
 
 /* Tooltip */
@@ -977,70 +959,16 @@ body.no-scroll {
     align-items: center;
     z-index: 10000;
 }
-.quick-add-modal {
-    background: #fff;
-    padding: 30px;
-    width: 90%;
-    max-width: 450px;
-    border-radius: 8px;
-    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 0.25s ease;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    position: relative;
-    text-align: center;
-}
-
-.quick-product-image {
-    width: 100%;
-    max-width: 200px;
-    height: auto;
-    object-fit: contain;
-    margin: 0 auto;
-    border-radius: 8px;
-}
-
-.quick-product-stock {
-    font-size: 0.9rem;
-    color: #666;
-    margin: 0;
-}
-
-.quantity-selector {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin: 10px 0;
-}
-
-.quantity-selector label {
-    font-weight: bold;
-    color: #000;
-}
-
-.quantity-selector input {
-    width: 60px;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    text-align: center;
-    font-size: 1rem;
-}
 
 .quick-product-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: bold;
     color: #000;
-    margin: 0;
 }
 
 .quick-product-price {
-    font-size: 1.2rem;
-    color: #D4111E;
-    font-weight: bold;
-    margin: 0;
+    font-size: 1.1rem;
+    color: #000;
 }
 
 .close-quick-modal {
