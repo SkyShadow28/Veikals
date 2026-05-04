@@ -173,7 +173,7 @@ function saveCart() {
     updateCartUI();
 }
 
-function addToCart(product, size) {
+function addToCart(product, size, qty = 1) {
     if (!product.available) {
         showNotification('Atvainojiet, šī prece nav pieejama.');
         return;
@@ -183,19 +183,19 @@ function addToCart(product, size) {
     const existingItem = cart.find(item => item.id === product.id && item.title === titleWithSize);
 
     if (existingItem) {
-        existingItem.quantity++;
+        existingItem.quantity += qty;
     } else {
         cart.push({
             id: product.id,
             title: titleWithSize,
             price: product.price,
-            quantity: 1,
+            quantity: qty,
             size: size
         });
     }
 
     saveCart();
-    showNotification('Pievienots grozam!');
+    showNotification(`Pievienots grozam! (${qty} gab.)`);
 }
 
 function renderCartModal() {
@@ -281,6 +281,21 @@ function openProductDetailsModal(productId) {
         sizeSelector.appendChild(option);
     });
 
+    // Daudzuma izvēlētājs
+    const qtyDisplay = modal.querySelector('.modal-qty-display');
+    if (qtyDisplay) qtyDisplay.textContent = '1';
+
+    const minusBtn = modal.querySelector('.modal-qty-minus');
+    const plusBtn = modal.querySelector('.modal-qty-plus');
+    if (minusBtn) minusBtn.onclick = () => {
+        const current = parseInt(qtyDisplay.textContent);
+        if (current > 1) qtyDisplay.textContent = current - 1;
+    };
+    if (plusBtn) plusBtn.onclick = () => {
+        const current = parseInt(qtyDisplay.textContent);
+        qtyDisplay.textContent = current + 1;
+    };
+
     const addToCartBtn = modal.querySelector('.modal-add-to-cart-btn');
     addToCartBtn.disabled = true;
 
@@ -291,8 +306,9 @@ function openProductDetailsModal(productId) {
 
     newBtn.addEventListener('click', () => {
         const selectedSize = sizeSelector.value;
+        const qty = qtyDisplay ? parseInt(qtyDisplay.textContent) : 1;
         if (selectedSize) {
-            addToCart(product, selectedSize);
+            addToCart(product, selectedSize, qty);
             closeModal();
         }
     });
@@ -323,6 +339,21 @@ function openQuickAddModal(productId) {
         sizeSelector.appendChild(option);
     });
 
+    // Daudzuma izvēlētājs
+    const qtyDisplay = modal.querySelector('.quick-qty-display');
+    if (qtyDisplay) qtyDisplay.textContent = '1';
+
+    const minusBtn = modal.querySelector('.quick-qty-minus');
+    const plusBtn = modal.querySelector('.quick-qty-plus');
+    if (minusBtn) minusBtn.onclick = () => {
+        const current = parseInt(qtyDisplay.textContent);
+        if (current > 1) qtyDisplay.textContent = current - 1;
+    };
+    if (plusBtn) plusBtn.onclick = () => {
+        const current = parseInt(qtyDisplay.textContent);
+        qtyDisplay.textContent = current + 1;
+    };
+
     const addToCartBtn = modal.querySelector('.quick-add-btn');
     addToCartBtn.disabled = true;
 
@@ -333,8 +364,9 @@ function openQuickAddModal(productId) {
 
     newBtn.addEventListener('click', () => {
         const selectedSize = sizeSelector.value;
+        const qty = qtyDisplay ? parseInt(qtyDisplay.textContent) : 1;
         if (selectedSize) {
-            addToCart(product, selectedSize);
+            addToCart(product, selectedSize, qty);
             closeModal();
         }
     });
