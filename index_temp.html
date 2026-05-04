@@ -179,37 +179,31 @@
     <!-- Product Details Modal (Large) -->
     <div id="productDetailsOverlay">
         <div class="product-details-modal">
-            <span class="close-details-modal">&times;</span>
-            <div class="modal-content-wrapper">
-                <img src="" alt="Product Image" class="modal-product-image">
-                <div class="modal-product-info">
-                    <h2 class="modal-product-title"></h2>
-                    <p class="modal-product-price"></p>
-                    <p class="modal-product-availability"></p>
-                    <p class="modal-product-description"></p>
-                    <select id="productSizeSelector">
-                        <option value="">Izvēlies izmēru</option>
-                    </select>
-                    <button class="modal-add-to-cart-btn" disabled>Pievienot grozam</button>
-                </div>
-            </div>
+          <img class="modal-product-image">
+          <h2 class="modal-product-title"></h2>
+          <p class="modal-product-price"></p>
+          <p class="modal-product-availability"></p>
+          <p class="modal-product-description"></p>
+      
+          <select id="productSizeSelector"></select>
+          <button class="modal-add-to-cart-btn">Pievienot grozam</button>
+          <button class="close-details-modal">×</button>
         </div>
-    </div>
-
-    <!-- Quick Add Modal (Small) -->
-    <div id="quickAddOverlay" class="cart-modal-overlay">
+      </div>
+      <div id="quickAddOverlay">
         <div class="quick-add-modal">
-            <span class="close-quick-modal">&times;</span>
-            <img src="" alt="Product Image" class="quick-product-image">
-            <h3 class="quick-product-title"></h3>
-            <p class="quick-product-price"></p>
-            <p class="quick-product-stock"></p>
-            <select id="quickSizeSelector">
-                <option value="">Izvēlies izmēru</option>
-            </select>
-            <div class="quantity-selector">`r`n                <label for="quickQuantity">Daudzums:</label>`r`n                <input type="number" id="quickQuantity" min="1" value="1">`r`n            </div>`r`n            <button class="quick-add-btn" disabled>Pievienot grozam</button>
+          <button class="close-quick-modal">×</button>
+      
+          <img class="quick-product-image">
+          <h3 class="quick-product-title"></h3>
+          <p class="quick-product-price"></p>
+          <p class="quick-product-stock"></p>
+      
+          <select id="quickSizeSelector"></select>
+          <button class="quick-add-btn" disabled>Pievienot</button>
         </div>
-    </div>
+      </div>
+      
 </body>
 
 </html>

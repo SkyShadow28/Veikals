@@ -23,14 +23,11 @@ async function fetchAndRenderProducts() {
 
         const data = await response.json();
 
-        // Datu transformācija no Sheets uz JS objektu
         allProducts = data.map((product, index) => {
-            // Ģenerējam ID no nosaukuma
             const generatedId = product.name
                 ? product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')
                 : `product-${index}`;
 
-            // Pārbaudām vai sizes ir masīvs vai strings
             let sizesList = ['Vienots'];
             if (Array.isArray(product.sizes)) {
                 sizesList = product.sizes;
@@ -38,25 +35,12 @@ async function fetchAndRenderProducts() {
                 sizesList = product.sizes.split(";").map(s => s.trim());
             }
 
-            // Pārbaudām attēlu un konvertējam Google Drive saiti
-            let imageUrl = 'images/placeholder.png';
-            if (product.image && typeof product.image === 'string' && product.image.startsWith('http')) {
-                // Konvertējam download saiti uz view saiti, ja tā ir Google Drive
-                if (product.image.includes('drive.google.com') || product.image.includes('drive.usercontent.google.com')) {
-                    const idMatch = product.image.match(/id=([a-zA-Z0-9_-]+)/);
-                    if (idMatch && idMatch[1]) {
-                        imageUrl = `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
-                    } else {
-                        imageUrl = product.image;
-                    }
-                } else {
-                    imageUrl = product.image;
-                }
-            }
+            // ✅ LABOTS: funkcija definēta ĀRPUS .map() un pareizi izsaukta
+            const imageUrl = convertGoogleDriveUrl(product.image);
 
             return {
                 id: generatedId,
-                title: product.name,
+                title: product.name || 'Produkts',
                 price: parseFloat(product.price) || 0,
                 image: imageUrl,
                 description: product.description || '',
@@ -69,14 +53,30 @@ async function fetchAndRenderProducts() {
         renderProducts(allProducts);
 
     } catch (error) {
-        console.error("Kļūda, ielādējot datus no Sheets API:", error);
-        productGrid.innerHTML = `
-            <div class="error-message" style="text-align:center; padding:20px; color:red;">
-                <p>Neizdevās ielādēt produktus.</p>
-                <p style="font-size:0.8em; color:#666;">${error.message}</p>
-                <p style="font-size:0.8em; color:#666;">Ja redzat šo ziņojumu lokāli (file://), tas ir drošības ierobežojumu dēļ. Lūdzu, pārbaudiet GitHub Pages versiju.</p>
-            </div>`;
+        console.error("Kļūda:", error);
+        productGrid.innerHTML = `<div class="error-message">Neizdevās ielādēt produktus: ${error.message}</div>`;
     }
+}
+
+// ✅ LABOTS: funkcija ir ĀRPUS fetchAndRenderProducts, globālā līmenī
+function convertGoogleDriveUrl(url) {
+    if (!url || url.trim() === '') return 'images/placeholder.png';
+
+    // variants: /file/d/XXXX/view
+    let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (match && match[1]) {
+        // thumbnail URL strādā bez CORS problēmām
+        return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w400`;
+    }
+
+    // variants: ?id=XXXX
+    match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if (match && match[1]) {
+        return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w400`;
+    }
+
+
+    return url; // ja nav Drive saite, atdod kā ir
 }
 
 function renderProducts(productsToRender) {
@@ -99,7 +99,7 @@ function renderProducts(productsToRender) {
 
         productCard.innerHTML = `
             <div class="product-content-wrapper">
-                <img src="${product.image}" alt="${product.title}" class="product-image" loading="lazy">
+                <img src="${product.image}" alt="${product.title}" onerror="this.src='images/placeholder.png'">
                 <div class="product-info">
                     <h3>${product.title}</h3>
 
@@ -403,26 +403,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mainProductContainer) {
         mainProductContainer.addEventListener('click', (e) => {
 
-            // 2.1. Pievienot Grozam (Atver Mazo Quick Add Modālo)
             const addToCartBtn = e.target.closest('.add-to-cart-btn');
             if (addToCartBtn) {
-                e.stopPropagation(); // Kritiski: aptur, lai neatvērtos Lielais Modālais
-                const id = addToCartBtn.dataset.id;
-                openQuickAddModal(id);
+                e.stopPropagation();
+                openQuickAddModal(addToCartBtn.dataset.id);
                 return;
             }
 
-            // 2.2. Noklikšķināts uz kartītes (Atver Lielo Detaļu Modālo)
-            const productWrapper = e.target.closest('.product-content-wrapper');
-            if (productWrapper) {
-                const productCard = productWrapper.closest('.product-card');
-                if (productCard) {
-                    const id = productCard.getAttribute('data-id');
-                    if (id) {
-                        openProductDetailsModal(id);
-                    }
-                }
-                return;
+            const productCard = e.target.closest('.product-card');
+            if (productCard) {
+                const id = productCard.getAttribute('data-id');
+                if (id) openProductDetailsModal(id);
             }
         });
     }
